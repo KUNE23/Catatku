@@ -7,12 +7,40 @@ const open = ref(false);
 const inputNama = ref("");
 const inputTanggal = ref("");
 const inputJenis = ref("");
-const inputNominal = ref("");
+const inputNominal = ref(0);
 const inputDeskripsi = ref("");
 const url = "http://localhost:8000/api";
 const dataTransaksi = ref([]);
 const isUpdate = ref(false);
 const idTransaksi = ref("");
+
+const formatNominal = (value) => {
+    if (typeof value !== "number") {
+        return value;
+    }
+
+    return value.toLocaleString("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+    });
+};
+
+const formatTanggal = (dateString) => {
+    if (!dateString) return "";
+
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return dateString;
+    }
+
+    return new Intl.DateTimeFormat("id-Id", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    }).format(date);
+};
 
 const getTransaksi = async () => {
     try {
@@ -96,12 +124,6 @@ onMounted(() => {
                     Tambah Data
                 </a>
             </span>
-            <span>
-                <a
-                    class="inline-block rounded-sm border border-red-600 bg-red-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden"
-                    >Hapus</a
-                >
-            </span>
             <div class="w-full mx-auto">
                 <div
                     class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg"
@@ -145,7 +167,11 @@ onMounted(() => {
                                     >
                                         <td>{{ transaksi.id }}</td>
                                         <td>{{ transaksi.name }}</td>
-                                        <td>{{ transaksi.tanggal }}</td>
+                                        <td>
+                                            {{
+                                                formatTanggal(transaksi.tanggal)
+                                            }}
+                                        </td>
                                         <td class="text-center">
                                             <div
                                                 v-if="
@@ -166,7 +192,11 @@ onMounted(() => {
                                             </div>
                                         </td>
 
-                                        <td>{{ transaksi.nominal }}</td>
+                                        <td>
+                                            {{
+                                                formatNominal(transaksi.nominal)
+                                            }}
+                                        </td>
                                         <td>{{ transaksi.deskripsi }}</td>
                                         <td>
                                             <span
@@ -198,6 +228,26 @@ onMounted(() => {
                                                         />
                                                     </svg>
                                                 </button>
+                                                <button
+                                                    type="button"
+                                                    class="px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 focus:relative"
+                                                    aria-label="Delete"
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke-width="1.5"
+                                                        stroke="currentColor"
+                                                        class="size-4"
+                                                    >
+                                                        <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                                                        />
+                                                    </svg>
+                                                </button>
                                             </span>
                                         </td>
                                     </tr>
@@ -209,6 +259,87 @@ onMounted(() => {
                                 </tr>
                             </tbody>
                         </table>
+                        <div>
+                            <ul
+                                class="flex justify-center gap-1 text-gray-900 mb-5 mt-5"
+                            >
+                                <li>
+                                    <a
+                                        href="#"
+                                        class="grid size-8 place-content-center rounded border border-gray-200 transition-colors hover:bg-gray-50 rtl:rotate-180"
+                                        aria-label="Previous page"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="size-4"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a
+                                        href="#"
+                                        class="block size-8 rounded border border-gray-200 text-center text-sm/8 font-medium transition-colors hover:bg-gray-50"
+                                    >
+                                        1
+                                    </a>
+                                </li>
+
+                                <li
+                                    class="block size-8 rounded border border-indigo-600 bg-indigo-600 text-center text-sm/8 font-medium text-white"
+                                >
+                                    2
+                                </li>
+
+                                <li>
+                                    <a
+                                        href="#"
+                                        class="block size-8 rounded border border-gray-200 text-center text-sm/8 font-medium transition-colors hover:bg-gray-50"
+                                    >
+                                        3
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a
+                                        href="#"
+                                        class="block size-8 rounded border border-gray-200 text-center text-sm/8 font-medium transition-colors hover:bg-gray-50"
+                                    >
+                                        4
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a
+                                        href="#"
+                                        class="grid size-8 place-content-center rounded border border-gray-200 transition-colors hover:bg-gray-50 rtl:rotate-180"
+                                        aria-label="Next page"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="size-4"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
                         <Teleport to="body">
                             <div v-if="open" class="modal">
                                 <div
