@@ -18,6 +18,8 @@ return new class extends Migration
             $table->enum('jenis', ['Pemasukan', 'Pengeluaran']);
             $table->integer('nominal');
             $table->TEXT('deskripsi', 1000);
+            $table->unsignedBigInteger('user_id')->after('id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,5 +30,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('transaksis');
+       
     }
 };

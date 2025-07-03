@@ -15,12 +15,11 @@ return [
     |
     */
 
-    'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
-        '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
-        Sanctum::currentApplicationUrlWithPort(),
-        // Sanctum::currentRequestHost(),
-    ))),
+    // config/sanctum.php
+'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS',
+    // Ini adalah nilai default jika SANCTUM_STATEFUL_DOMAINS tidak ada di .env
+    'localhost,127.0.0.1' // Contoh default yang lebih sederhana
+)),
 
     /*
     |--------------------------------------------------------------------------

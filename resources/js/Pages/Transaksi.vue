@@ -9,7 +9,7 @@ const inputTanggal = ref("");
 const inputJenis = ref("");
 const inputNominal = ref(0);
 const inputDeskripsi = ref("");
-const url = "http://localhost:8000/api";
+const url = "/api";
 const dataTransaksi = ref([]);
 const isUpdate = ref(false);
 const idTransaksi = ref("");
@@ -44,10 +44,35 @@ const formatTanggal = (dateString) => {
 
 const getTransaksi = async () => {
     try {
-        const response = await axios.get(url + "/transaksi");
+        console.log(dataTransaksi);
+        const response = await axios.get("http://localhost:8000/api/transaksi");
         dataTransaksi.value = response.data.data.data;
     } catch (error) {
         console.log(error);
+    }
+};
+
+const deleteTransaksi = async () => {
+    try {
+        const response = await axios.delete(
+            url + "/transaksi/" + idTransaksi.value
+        );
+
+        if (response.status === 200 || response.status === 204) {
+            alert("Data Transaksi berhasil dihapus!");
+            getTransaksi();
+        } else {
+            alert("Gagal menghapus data transaksi.");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const confirmDelete = (id) => {
+    if (confirm("apakah yakin akan menghapus data ?")) {
+        idTransaksi.value = id;
+        deleteTransaksi();
     }
 };
 
@@ -96,7 +121,15 @@ const getDataTransaksi = async (objTransaksi) => {
     isUpdate.value = true;
 };
 onMounted(() => {
-    getTransaksi();
+    axios
+        .get("/sanctum/csrf-cookie")
+        .then(response => {
+            console.log("CSRF cookie berhasil!");
+            getTransaksi();
+        })
+        .catch(error => {
+            console.error("Error");
+        });
 });
 </script>
 
@@ -229,6 +262,11 @@ onMounted(() => {
                                                     </svg>
                                                 </button>
                                                 <button
+                                                    @click="
+                                                        confirmDelete(
+                                                            transaksi.id
+                                                        )
+                                                    "
                                                     type="button"
                                                     class="px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 focus:relative"
                                                     aria-label="Delete"

@@ -31,6 +31,7 @@ class User extends Authenticatable
         'password',
     ];
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -52,6 +53,9 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function transaksis() {
+        return $this->hasMany(Transaksi::class);
+    }
     /**
      * Get the attributes that should be cast.
      *
