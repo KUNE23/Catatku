@@ -5,9 +5,14 @@
     },
     "routes": [
         {
-            "src": "/(.*\\.(?:css|js|png|jpg|jpeg|gif|svg|ico|ttf|woff|woff2|eot|otf|webp|avif|txt))$",
-            "dest": "/public/$1"
+            "src": "/img/(.*)",
+            "dest": "public/img/"
         },
+        {
+            "src": "/build/(.*)",
+            "dest": "public/build/"
+        },
+
         {
             "src": "/(.*)",
             "dest": "/api/index.php"
