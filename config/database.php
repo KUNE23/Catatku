@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -85,10 +85,10 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL', 'postgresql://postgres.yfdodwfdpqgjtlreltpn:catatku@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', 'aws-0-ap-southeast-1.pooler.supabase.com'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'laravel'),
-            'username' => env('DB_USERNAME', 'root'),
+            'database' => env('DB_DATABASE', 'postgres'),
+            'username' => env('DB_USERNAME', 'postgres.yfdodwfdpqgjtlreltpn'),
             'password' => env('DB_PASSWORD', 'catatku'),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
