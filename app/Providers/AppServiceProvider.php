@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        URL::forceRootUrl(Config::get('https://catatku-eight.vercel.app/'));
+    if (str_contains(Config::get('https://catatku-eight.vercel.app/'), 'https://')) {
+        URL::forceScheme('https');
     }
+    }
+
+    
 }
