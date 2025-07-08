@@ -30,6 +30,7 @@
         "jquery": "^3.7.1",
         "vue-chartjs": "^5.3.2",
         "vue-toastification": "^2.0.0-rc.5",
-        "vue3-easy-data-table": "^1.5.47"
+        "vue3-easy-data-table": "^1.5.47",
+        "ziggy-js": "^2.5.3"
     }
 }
