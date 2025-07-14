@@ -66,6 +66,12 @@ const logout = () => {
                                 >
                                     Transaksi
                                 </NavLink>
+                                <NavLink
+                                    :href="route('calendar')"
+                                    :active="route().current('calendar')"
+                                >
+                                    Kalender
+                                </NavLink>
                             </div>
                         </div>
 
@@ -360,6 +366,12 @@ const logout = () => {
                             :active="route().current('transaksi')"
                         >
                             Transaksi
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('calendar')"
+                            :active="route().current('calendar')"
+                        >
+                            Kalender
                         </ResponsiveNavLink>
                     </div>
 

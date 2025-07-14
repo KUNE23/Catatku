@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransaksiController;
 
@@ -30,4 +31,10 @@ Route::middleware([
     ])->name('transaksi.update');
     Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'
     ])->name('transaksi.destroy');
+    
+
+Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
+Route::post('/events', [EventController::class, 'store'])->name('events.store');
+Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
+Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 });
